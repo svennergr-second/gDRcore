@@ -17,6 +17,30 @@ pkgs:
     ref: main
     subdir: ~
     source: GITHUB
+  gDRcomponents:
+    ver: '>=1.1.57'
+    url: gdrplatform/gDRcomponents
+    ref: master
+    subdir: gDRcomponents
+    source: GITHUB
+  gDRcore:
+    ver: '>=1.1.35'
+    url: gdrplatform/gDRcore
+    ref: master
+    subdir: gDRcore
+    source: GITHUB
+  gDRimport:
+    ver: '>=0.0.13'
+    url: gdrplatform/gDRimport
+    ref: main
+    subdir: ~
+    source: GITHUB
+  gDR:
+    ver: '>=0.0.12'
+    url: gdrplatform/gDR
+    ref: main
+    subdir: ~
+    source: GITHUB
   grr:
     ver: '>=0.9.5'
     url: https://github.com/cran/grr.git

@@ -28,8 +28,8 @@ verify_version <- function(name, required_version) {
     ))
   }
 }
-#' this function help figuring out which GitHub domain should be used 
-#' github.roche.com will be chosen if available 
+#' this function help figuring out which GitHub domain should be used
+#' github.roche.com will be chosen if available
 #' otherwise github.com
 get_github_hostname <- function() {
   conn_status <- tryCatch(
@@ -95,7 +95,10 @@ for (name in names(deps)) {
       remotes::install_version(
         package = name,
         version = pkg$ver,
-        repos = pkg$repos
+        repos = pkg$repos,
+        dependencies=TRUE,
+        build_manual=TRUE,
+        build_vignettes=TRUE
       )
     },
 
@@ -105,10 +108,13 @@ for (name in names(deps)) {
       BiocManager::install(
         pkgs = name,
         update = FALSE,
-        version = pkg$ver  ## Bioc version or 'devel'
+        version = pkg$ver,  ## Bioc version or 'devel'
+        dependencies=TRUE,
+        build_manual=TRUE,
+        build_vignettes=TRUE
       )
     },
-    
+
     ## GitHub installation
     "GITHUB" = {
       if (is.null(pkg$ref)) { pkg$ref <- "HEAD" }
@@ -116,18 +122,24 @@ for (name in names(deps)) {
         repo = pkg$url,
         ref = pkg$ref,
         subdir = pkg$subdir,
-        host = gh_hostname
+        host = gh_hostname,
+        dependencies=TRUE,
+        build_manual=TRUE,
+        build_vignettes=TRUE
       )
       verify_version(name, pkg$ver)
     },
-    
+
     ## Git installation
     "GIT" = {
       remotes::install_git(
         url = pkg$url,
         subdir = pkg$subdir,
         ref = pkg$ref,
-        credentials = keys
+        credentials = keys,
+        dependencies=TRUE,
+        build_manual=TRUE,
+        build_vignettes=TRUE
       )
       verify_version(name, pkg$ver)
     }
