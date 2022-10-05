@@ -199,20 +199,21 @@ runDrugResponseProcessingPipeline <- function(df_,
     message("Step 1.3 - ", experiment)
     
     se <- if (experiment == "matrix") {
-      purrr::quietly(fit_SE.combinations)(se = se$result,
+      fit_SE.combinations(se = se$result,
                           series_identifiers = experiment_identifier,
                           averaged_assay = averaged_assay)
     } else {
-      purrr::quietly(fit_SE)(se = se$result, 
+      fit_SE(se = se$result, 
              nested_identifiers = experiment_identifier,
              averaged_assay = averaged_assay, 
              metrics_assay = metrics_assay, 
              n_point_cutoff = n_point_cutoff)
     }
-    paste_warnings(se$warnings)
     
     message("Step 1.4 - ", experiment)
     
+    paste_warnings(se$warnings)
+  
     if (add_raw_data) {
       se$result <- gDRutils::set_SE_experiment_raw_data(se$result, df_list[[experiment]])
     }
