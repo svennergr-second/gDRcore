@@ -173,6 +173,7 @@ runDrugResponseProcessingPipeline <- function(df_,
     } else {
       nested_identifiers[["single-agent"]]
     }
+    message("Step 1.1 - ", experiment)
     se <- purrr::quietly(create_and_normalize_SE)(df_ = df_list[[experiment]],
                                                      readout = readout,
                                                      control_mean_fxn = control_mean_fxn,
@@ -185,12 +186,18 @@ runDrugResponseProcessingPipeline <- function(df_,
                                                      ndigit_rounding = ndigit_rounding)
     
     paste_warnings(se$warnings)
+    
+    message("Step 1.2 - ", experiment)
+    
     se <- purrr::quietly(average_SE)(se = se$result, 
                                         series_identifiers = experiment_identifier,
                                         override_masked = override_masked, 
                                         normalized_assay = normalized_assay, 
                                         averaged_assay = averaged_assay)
     paste_warnings(se$warnings)
+    
+    message("Step 1.3 - ", experiment)
+    
     se <- if (experiment == "matrix") {
       purrr::quietly(fit_SE.combinations)(se = se$result,
                           series_identifiers = experiment_identifier,
@@ -203,6 +210,9 @@ runDrugResponseProcessingPipeline <- function(df_,
              n_point_cutoff = n_point_cutoff)
     }
     paste_warnings(se$warnings)
+    
+    message("Step 1.4 - ", experiment)
+    
     if (add_raw_data) {
       se$result <- gDRutils::set_SE_experiment_raw_data(se$result, df_list[[experiment]])
     }
