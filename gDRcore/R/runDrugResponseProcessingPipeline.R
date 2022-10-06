@@ -199,11 +199,11 @@ runDrugResponseProcessingPipeline <- function(df_,
     message("Step 1.3 - ", experiment)
     
     se <- if (experiment == "matrix") {
-      fit_SE.combinations(se = se$result,
+      purrr::quietly(fit_SE.combinations)(se = se$result,
                           series_identifiers = experiment_identifier,
                           averaged_assay = averaged_assay)
     } else {
-      fit_SE(se = se$result, 
+      purrr::quietly(fit_SE)(se = se$result, 
              nested_identifiers = experiment_identifier,
              averaged_assay = averaged_assay, 
              metrics_assay = metrics_assay, 
