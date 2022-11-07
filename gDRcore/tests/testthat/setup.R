@@ -1,3 +1,4 @@
+set.seed(123)
 n <- 64
 md_df <- data.frame(
   Gnumber = rep(c("vehicle", "untreated", paste0("G", seq(2))), each = 16), 
